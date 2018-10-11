@@ -2,7 +2,7 @@
 This is a Trailing Sample,it is similar to the fruit knife cut light effect ,weapon waving effect,airplane tail flame.
 When the Fingers move on the screen ,the streak is appear.
 ## Running Result
-![这里写图片描述](http://img.blog.csdn.net/20180203111910498)
+https://blog.csdn.net/ModestBean/article/details/79245439
 ## Algorithm 
 ![这里写图片描述](./result/yuan1.png)
 
