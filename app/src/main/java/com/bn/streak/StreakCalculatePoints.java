@@ -13,27 +13,21 @@ import static com.bn.streak.StreakDataConstant.lock;
  * @Description        拖尾顶点绘制类，重要，基于手指拖动位置计算顶点位置
  * @version             2.0
  */
-public class StreakSystem {
+public class StreakCalculatePoints {
     float positionZ=0.0f;//z平面
     StreakForDraw sfd;//绘制者
-    public StreakThread  streakThread;//更新线程
+    public StreakDisappearThread streakThread;//更新线程
     int streak;//拖尾纹理图片
-    int STREAK_MAX_NUMBER;//最大顶点个数
-
     float maxLifeSpan;//最大生命周期
     float lifeSpanStep;//生命周期的步进
     float LINE_COLOR[];//拖尾颜色
-
     float STREAK_WIDTH;//条带的宽度
     float streak_max_number;//列表最大长度
-
     int srcBlend;//源混合因子
     int dstBlend;//目标混合因子
     int blendFunc;//混合方式
-
     public List<float[]> lsPoints=new ArrayList<float[]>(StreakDataConstant.STREAK_MAX_NUMBER);//存放位置的List
-
-    public StreakSystem(float positionZ,StreakForDraw sfd,int streak){
+    public StreakCalculatePoints(float positionZ, StreakForDraw sfd, int streak){
         this.positionZ=positionZ;
         this.sfd=sfd;
         this.STREAK_WIDTH=StreakDataConstant.STREAK_WIDTH;
@@ -46,7 +40,7 @@ public class StreakSystem {
         this.srcBlend=StreakDataConstant.SRC_BLEND;
         this.dstBlend=StreakDataConstant.DST_BLEND;
         //启动线程
-        streakThread=new StreakThread(this);
+        streakThread=new StreakDisappearThread(this);
         streakThread.start();
     }
     //计算点位置的方法
@@ -154,7 +148,8 @@ public class StreakSystem {
         }
         update();
     }
-    public void update(){//更新画面的方法
+    /**更新顶点数据的方法*/
+    public void update(){
         //顶点数组
         float[] points=new float[lsPoints.size()*3];
         for(int i=0;i<lsPoints.size();i++){

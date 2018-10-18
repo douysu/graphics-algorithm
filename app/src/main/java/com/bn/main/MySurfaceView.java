@@ -1,7 +1,6 @@
 package com.bn.main;
 import java.io.IOException;
 import java.io.InputStream;
-
 import android.content.res.Resources;
 import android.opengl.GLSurfaceView;
 import android.opengl.GLUtils;
@@ -13,14 +12,11 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-
 import com.bn.Constant.Constant;
 import com.bn.Constant.MatrixState;
 import com.bn.background.Background;
-import com.bn.streak.StreakDataConstant;
 import com.bn.streak.StreakForDraw;
-import com.bn.streak.StreakSystem;
-import com.bn.streak.StreakThread;
+import com.bn.streak.StreakCalculatePoints;
 
 /**
  * Simple to Introduction
@@ -31,7 +27,6 @@ import com.bn.streak.StreakThread;
  */
 public class MySurfaceView extends GLSurfaceView
 {
-    private final float TOUCH_SCALE_FACTOR = 180.0f/320;//角度缩放比例
     private SceneRenderer mRenderer;//场景渲染器
 
     public static float cx=0.0f;//摄像机x
@@ -42,7 +37,7 @@ public class MySurfaceView extends GLSurfaceView
     private float mPreviousX;//上次的触控位置X坐标
 
     StreakForDraw streakForDraw;//绘制者
-    StreakSystem streakSystem;//拖尾类
+    StreakCalculatePoints streakCalculatePoints;//拖尾类
     public MySurfaceView(Context context) {
         super(context);
         this.setEGLContextClientVersion(3);	//设置使用OPENGL ES3.0
@@ -59,16 +54,16 @@ public class MySurfaceView extends GLSurfaceView
         float x = e.getX();
         switch (e.getAction()) {
             case MotionEvent.ACTION_DOWN://按下
-                streakSystem.streakThread.isRun=Constant.THREAD_END;//关闭线程更新方法
-                streakSystem.lsPoints.clear();//清空坐标列表
+                streakCalculatePoints.streakThread.isRun=Constant.THREAD_END;//关闭线程更新方法
+                streakCalculatePoints.lsPoints.clear();//清空坐标列表
                 mPreviousY = y;//将原来点与当前点重合
                 mPreviousX = x;
                 break;
             case MotionEvent.ACTION_MOVE://滑动
-                streakSystem.moveCalculate(x,y,mPreviousX,mPreviousY);//更新粒子位置
+                streakCalculatePoints.moveCalculate(x,y,mPreviousX,mPreviousY);//更新粒子位置
                 break;
             case MotionEvent.ACTION_UP://抬起
-                streakSystem.streakThread.isRun=Constant.THREAD_START;//开启线程更新方法
+                streakCalculatePoints.streakThread.isRun=Constant.THREAD_START;//开启线程更新方法
                 break;
         }
         mPreviousY = y;//记录触控笔位置
@@ -91,8 +86,8 @@ public class MySurfaceView extends GLSurfaceView
             MatrixState.popMatrix();//恢复矩阵
 
             MatrixState.pushMatrix();//保护矩阵
-            if(streakSystem!=null){//绘制背景图
-                streakSystem.drawSelf();
+            if(streakCalculatePoints!=null){//绘制背景图
+                streakCalculatePoints.drawSelf();
             }
             MatrixState.popMatrix();//恢复矩阵
         }
@@ -126,7 +121,7 @@ public class MySurfaceView extends GLSurfaceView
              * @param   纹理图片
              */
             streak=initTexture(MySurfaceView.this.getResources(),"streak.png");
-            streakSystem=new StreakSystem(0.0f,streakForDraw,streak);
+            streakCalculatePoints=new StreakCalculatePoints(0.0f,streakForDraw,streak);
             //关闭背面剪裁
             GLES30.glDisable(GLES30.GL_CULL_FACE);
         }
