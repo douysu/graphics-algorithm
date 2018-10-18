@@ -1,14 +1,13 @@
 package com.bn.streak;
-
-import com.bn.Constant.Constant;
-
 import static com.bn.Constant.Constant.THREAD_END;
 import static com.bn.Constant.Constant.THREAD_START;
-
 /**
- * Created by Administrator on 2017/8/31.
+ * Simple to Introduction
+ * @Author              苏伊 yindou97@163.com
+ * @Date                2018-10-18
+ * @Description        拖尾线程类，拖尾自动减短，实现拖尾逐渐消失效果
+ * @version             2.0
  */
-
 public class StreakThread extends Thread {
     boolean flag = true;//标志位
     public int  isRun= THREAD_END;//0为false 1为true
@@ -41,7 +40,7 @@ public class StreakThread extends Thread {
                 e.printStackTrace();
             }
             try {
-                Thread.sleep(StreakDataConstant.threadTime);
+                Thread.sleep(StreakDataConstant.THREAD_DISAPPEAR_TIME);
             } catch (Exception e) {
                 e.printStackTrace();
             }

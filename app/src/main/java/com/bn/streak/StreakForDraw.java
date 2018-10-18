@@ -1,5 +1,4 @@
 package com.bn.streak;
-
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.nio.FloatBuffer;
@@ -12,7 +11,13 @@ import com.bn.Constant.ShaderUtil;
 import com.bn.main.MySurfaceView;
 
 import static com.bn.streak.StreakDataConstant.lock;
-
+/**
+ * Simple to Introduction
+ * @Author              苏伊 yindou97@163.com
+ * @Date                2018-10-18
+ * @Description        绘制拖尾类，与管线相关，涉及到数据缓冲，着色器绑定等
+ * @version             2.0
+ */
 public class StreakForDraw
 {
     int mProgram;//自定义渲染管线程序id
@@ -20,7 +25,7 @@ public class StreakForDraw
     int maPositionHandle; //顶点位置属性引用
     int muLifeSpan;//最大生命周期
     int maTexCoorHandle; //顶点纹理坐标属性引用id
-    int maLineColor;//线条颜色
+    int makLINE_COLOR;//线条颜色
 
     String mVertexShader;//顶点着色器代码脚本
     String mFragmentShader;//片元着色器代码脚本
@@ -104,12 +109,12 @@ public class StreakForDraw
         //获取程序中衰减因子引用id
         muLifeSpan= GLES30.glGetUniformLocation(mProgram, "maxLifeSpan");
         //获取颜色
-        maLineColor= GLES30.glGetUniformLocation(mProgram, "lineColor");
+        makLINE_COLOR= GLES30.glGetUniformLocation(mProgram, "kLINE_COLOR");
 
     }
 
     @SuppressLint("NewApi")
-    public void drawSelf(int texId,float maxLifeSpan,float[] lineColor)
+    public void drawSelf(int texId,float maxLifeSpan,float[] kLINE_COLOR)
     {
         //指定使用某套shader程序
         GLES30.glUseProgram(mProgram);
@@ -118,7 +123,7 @@ public class StreakForDraw
         //将最大生命周期传入渲染管线
         GLES30.glUniform1f(muLifeSpan, maxLifeSpan);
         //将线条颜色
-        GLES30.glUniform4fv(maLineColor, 1, lineColor, 0);
+        GLES30.glUniform4fv(makLINE_COLOR, 1, kLINE_COLOR, 0);
 
         synchronized(lock)
         {//加锁--防止在将顶点坐标数据送入渲染管线时，更新顶点坐标数据

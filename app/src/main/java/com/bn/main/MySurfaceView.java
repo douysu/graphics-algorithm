@@ -22,10 +22,13 @@ import com.bn.streak.StreakForDraw;
 import com.bn.streak.StreakSystem;
 import com.bn.streak.StreakThread;
 
-import static com.bn.Constant.Constant.THREAD_END;
-import static com.bn.Constant.Constant.THREAD_START;
-
-
+/**
+ * Simple to Introduction
+ * @Author          [苏伊 yindou97@163.com]
+ * @Date            [2018-10-18]
+ * @Description     [场景类，继承GLSurfaceView，包含绘制方法，触控等]
+ * @version         [2.0]
+ */
 public class MySurfaceView extends GLSurfaceView
 {
     private final float TOUCH_SCALE_FACTOR = 180.0f/320;//角度缩放比例
@@ -56,7 +59,7 @@ public class MySurfaceView extends GLSurfaceView
         float x = e.getX();
         switch (e.getAction()) {
             case MotionEvent.ACTION_DOWN://按下
-                streakSystem.streakThread.isRun=THREAD_END;//关闭线程更新方法
+                streakSystem.streakThread.isRun=Constant.THREAD_END;//关闭线程更新方法
                 streakSystem.lsPoints.clear();//清空坐标列表
                 mPreviousY = y;//将原来点与当前点重合
                 mPreviousX = x;
@@ -65,7 +68,7 @@ public class MySurfaceView extends GLSurfaceView
                 streakSystem.moveCalculate(x,y,mPreviousX,mPreviousY);//更新粒子位置
                 break;
             case MotionEvent.ACTION_UP://抬起
-                streakSystem.streakThread.isRun=THREAD_START;//开启线程更新方法
+                streakSystem.streakThread.isRun=Constant.THREAD_START;//开启线程更新方法
                 break;
         }
         mPreviousY = y;//记录触控笔位置
@@ -100,7 +103,7 @@ public class MySurfaceView extends GLSurfaceView
             //计算GLSurfaceView的宽高比
             float ratio = (float) height / width;
             //调用此方法计算产生透视投影矩阵
-            MatrixState.setProjectOrtho(-1, 1, -ratio, ratio, Constant.nearABS, Constant.farABS);
+            MatrixState.setProjectOrtho(-1, 1, -ratio, ratio, Constant.NEAR_DISTANCE, Constant.FAR_DISTANCE);
             //调用此方法产生摄像机9参数位置矩阵
             MatrixState.setCamera(cx,cy,cz,0f,0f,0f,0f,1.0f,0.0f);
         }

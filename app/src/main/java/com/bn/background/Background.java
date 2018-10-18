@@ -1,5 +1,4 @@
 package com.bn.background;
-
 import android.opengl.GLES30;
 
 import com.bn.Constant.MatrixState;
@@ -11,9 +10,13 @@ import java.nio.ByteOrder;
 import java.nio.FloatBuffer;
 
 import static com.bn.Constant.ShaderUtil.createProgram;
-
-
-//纹理三角形
+/**
+ * Simple to Introduction
+ * @Author          [苏伊 yindou97@163.com]
+ * @Date            [2018-10-18]
+ * @Description     [绘制背景类]
+ * @version         [2.0]
+ */
 public class Background
 {
     int mProgram;//自定义渲染管线程序id

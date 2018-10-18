@@ -1,14 +1,17 @@
 package com.bn.Constant;
-
 import android.content.res.Resources;
 import android.opengl.GLES30;
 import android.util.Log;
 
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
-
-//~--- JDK imports ------------------------------------------------------------
-
+/**
+ * Simple to Introduction
+ * @Author          [苏伊 yindou97@163.com]
+ * @Date            [2018-10-18]
+ * @Description     [着色器脚本编译类]
+ * @version         [2.0]
+ */
 public class ShaderUtil {
 
     /**

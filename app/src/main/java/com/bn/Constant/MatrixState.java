@@ -1,12 +1,15 @@
 package com.bn.Constant;
-
 import android.opengl.Matrix;
-
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.nio.FloatBuffer;
-
-//存储系统矩阵状态的类
+/**
+ * Simple to Introduction
+ * @Author          [苏伊 yindou97@163.com]
+ * @Date            [2018-10-18]
+ * @Description     [矩阵计算工具类]
+ * @version         [2.0]
+ */
 public class MatrixState
 {
 	private static float[] mProjMatrix = new float[16];//4x4矩阵 投影用

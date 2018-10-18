@@ -1,11 +1,12 @@
 package com.bn.Constant;
-
 /**
- * Created by Administrator on 2017/8/28.
+ * Simple to Introduction
+ * @Author          [苏伊 yindou97@163.com]
+ * @Date            [2018-10-18]
+ * @Description     [屏幕坐标系转换类，用于绘制背景]
+ * @version         [2.0]
  */
-
 public class ScreenScaleUtil {
-    //返回屏幕3d位置
     public static float[] fromPixPositionToScreenPosition(float cx,float cy)
     {
         float xAndY_Position[]=new float[3];//0 x 1 y

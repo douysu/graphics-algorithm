@@ -7,7 +7,13 @@ import android.view.Window;
 import android.view.WindowManager;
 
 import com.bn.main.MySurfaceView;
-
+/**
+ * Simple to Introduction
+ * @Author          [苏伊 yindou97@163.com]
+ * @Date            [2018-10-18]
+ * @Description     [Activity]
+ * @version         [2.0]
+ */
 public class MyActivity extends Activity {
     private MySurfaceView mGLSurfaceView;
     @Override
@@ -18,8 +24,6 @@ public class MyActivity extends Activity {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN ,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
-//        //设置为竖屏模式
-//        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
 
         //初始化GLSurfaceView
         mGLSurfaceView = new MySurfaceView(this);

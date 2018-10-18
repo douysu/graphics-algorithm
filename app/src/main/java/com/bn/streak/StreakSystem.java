@@ -1,50 +1,47 @@
 package com.bn.streak;
-
 import android.opengl.GLES30;
-
 import com.bn.Constant.MatrixState;
 import com.bn.Constant.ScreenScaleUtil;
-
 import java.util.ArrayList;
 import java.util.List;
 
 import static com.bn.streak.StreakDataConstant.lock;
-
 /**
- * Created by Douzi on 2017/8/29.
+ * Simple to Introduction
+ * @Author              苏伊 yindou97@163.com
+ * @Date                2018-10-18
+ * @Description        拖尾顶点绘制类，重要，基于手指拖动位置计算顶点位置
+ * @version             2.0
  */
-
 public class StreakSystem {
-
     float positionZ=0.0f;//z平面
     StreakForDraw sfd;//绘制者
     public StreakThread  streakThread;//更新线程
     int streak;//拖尾纹理图片
-    int streakNum;//最大顶点个数
+    int STREAK_MAX_NUMBER;//最大顶点个数
 
     float maxLifeSpan;//最大生命周期
     float lifeSpanStep;//生命周期的步进
-    float lineColor[];//拖尾颜色
+    float LINE_COLOR[];//拖尾颜色
 
-    float Stroke;//条带的宽度
-    float StreakNum;//列表最大长度
+    float STREAK_WIDTH;//条带的宽度
+    float streak_max_number;//列表最大长度
 
     int srcBlend;//源混合因子
     int dstBlend;//目标混合因子
     int blendFunc;//混合方式
 
-    public List<float[]> lsPoints=new ArrayList<float[]>(StreakDataConstant.StreakNum);//存放位置的List
+    public List<float[]> lsPoints=new ArrayList<float[]>(StreakDataConstant.STREAK_MAX_NUMBER);//存放位置的List
 
     public StreakSystem(float positionZ,StreakForDraw sfd,int streak){
         this.positionZ=positionZ;
         this.sfd=sfd;
-        this.Stroke=StreakDataConstant.Stroke;
-        this.StreakNum=StreakDataConstant.StreakNum;
+        this.STREAK_WIDTH=StreakDataConstant.STREAK_WIDTH;
+        this.streak_max_number=StreakDataConstant.STREAK_MAX_NUMBER;
         this.maxLifeSpan=StreakDataConstant.MAX_LIFE_SPAN;
         this.lifeSpanStep=StreakDataConstant.LIFE_SPAN_STEP;
         this.streak=streak;
-        this.streakNum=StreakDataConstant.StreakNum;
-        this.lineColor=StreakDataConstant.lineColor;
+        this.LINE_COLOR=StreakDataConstant.LINE_COLOR;
         this.blendFunc=StreakDataConstant.BLEND_FUNC;
         this.srcBlend=StreakDataConstant.SRC_BLEND;
         this.dstBlend=StreakDataConstant.DST_BLEND;
@@ -77,9 +74,9 @@ public class StreakSystem {
         x2=xyOld[0];y2=xyOld[1];//旧坐标
         xcenter=(x1+x2)/2.0f;ycenter=(y1+y2)/2.0f;//中点坐标
         //限定长度
-        if(lsPoints.size()== StreakDataConstant.StreakNum){
-            lsPoints.remove(StreakDataConstant.StreakNum-1);
-            lsPoints.remove(StreakDataConstant.StreakNum-2);
+        if(lsPoints.size()== StreakDataConstant.STREAK_MAX_NUMBER){
+            lsPoints.remove(StreakDataConstant.STREAK_MAX_NUMBER-1);
+            lsPoints.remove(StreakDataConstant.STREAK_MAX_NUMBER-2);
         }
         //递减生命周期(手指一直拖动保持其长度)
         for(int i=0;i<lsPoints.size();i++){
@@ -92,11 +89,11 @@ public class StreakSystem {
         if((y1==y2)&&(x1!=x2)){//横着划一条直线(无斜率)
             //第一个点
             kuanxy1[0]=xcenter;
-            kuanxy1[1]=ycenter+Stroke;
+            kuanxy1[1]=ycenter+STREAK_WIDTH;
             kuanxy1[2]=maxLifeSpan;
             //第二个点
             kuanxy2[0]=xcenter;
-            kuanxy2[1]=ycenter-Stroke;
+            kuanxy2[1]=ycenter-STREAK_WIDTH;
             kuanxy2[2]=maxLifeSpan;
             /**
              * 横着向右互动，将顶点1首先送入
@@ -122,7 +119,7 @@ public class StreakSystem {
             lsPoints.add(0,kuanxy2);
         }else{
             float k=(x1-x2)/(y1-y2);//当前的斜率
-            float t=Stroke*Stroke/(1.0f+k*k);
+            float t=STREAK_WIDTH*STREAK_WIDTH/(1.0f+k*k);
             //第一个点
             kuanxy1[0]=(float) Math.sqrt(t)+xcenter;
             kuanxy1[1]=(-(x1-x2)*(kuanxy1[0]-xcenter)/(y1-y2))+ycenter;
@@ -195,7 +192,7 @@ public class StreakSystem {
             /**
              * 长度，最大周期，颜色
              * */
-            sfd.drawSelf(streak,maxLifeSpan,lineColor);
+            sfd.drawSelf(streak,maxLifeSpan,LINE_COLOR);
         }
         MatrixState.popMatrix();//恢复矩阵
         //开启深度检测
