@@ -23,8 +23,6 @@
 - OpenGL ES 3.0 
 - Java
 
-
-
 # 运行
 
 git clone，打开Android Studio import project。 点击run。
@@ -37,6 +35,3 @@ git clone，打开Android Studio import project。 点击run。
  - 添加详细类注释，概括类的功能。
  - 修改了部分变量名称。
  - 升级项目环境为Android Studio 3.2，原版本为2.2，已经淘汰。
-
-## PS
-项目的重构真耗费时间和精力，年轻时写的程序给自己埋了很多雷，现已修改了部分，还有部分未解决。
