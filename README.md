@@ -14,3 +14,4 @@
 4. [3D摄像机漫游](./CameraRoam)
 5. [3D-PLY文件读取](./3D-PLY)
 6. [3D-骨架提取](./3D-skeleton)
+7. [人物透视X光效果](./x-ray-scene_3d)
