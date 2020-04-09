@@ -6,6 +6,10 @@
 - [我的博客](https://blog.csdn.net/ModestBean)
 - [我的知乎](https://zhuanlan.zhihu.com/c_1218472587279433728)
 
+# 运行结果
+
+<img src="curvature.png" width=300>
+
 # 参考资料
 
 ply文件读取库[rply](https://web.archive.org/web/20081203195143/http://www.cs.princeton.edu/~diego/professional/rply/)

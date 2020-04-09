@@ -8,6 +8,10 @@
 - [我的博客](https://blog.csdn.net/ModestBean)
 - [我的知乎](https://zhuanlan.zhihu.com/c_1218472587279433728)
 
+# 运行结果
+
+<img src="skeleton.png" width=300>
+
 # 代码
 
 ## 1 ImagePy读取图像栈
