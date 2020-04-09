@@ -11,3 +11,4 @@
 1. [OpenGL 拖尾、刀光、剑光、尾焰效果的开发](./streak) 
 2. [虚化模糊场景（类似摄像机的人像效果）](./blur-scene-gaussian--3d)
 3. [OpenGL ES Uniform缓冲](./opengles-uniform-buffer)
+4. [3D摄像机漫游](./CameraRoam)
