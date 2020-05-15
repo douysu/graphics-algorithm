@@ -14,6 +14,22 @@
 
 <img src="./translate/chapter0/africanhead.png" width=400>
 
+# 相应文章目录：
+
+[[从零构建光栅渲染器] 0.引言](https://zhuanlan.zhihu.com/p/128112217)
+
+[[从零构建光栅渲染器] 1.Bresenham 画线算法](https://zhuanlan.zhihu.com/p/128927381)
+
+[[从零构建光栅渲染器] 2.三角形栅格化和背面剪裁](https://zhuanlan.zhihu.com/p/132698610)
+
+[[从零构建光栅渲染器] 3.隐藏面剃除 z-buffer（深度缓冲）](https://zhuanlan.zhihu.com/p/133696671)
+
+[[从零构建光栅渲染器] 4.透视投影](https://zhuanlan.zhihu.com/p/138500969)
+
+[[从零构建光栅渲染器] 5.移动摄像机](https://zhuanlan.zhihu.com/p/140946151)
+
+[[从零构建光栅渲染器] 6. 顶点和片元着色器的工作原理](https://zhuanlan.zhihu.com/p/141201484)
+
 # 需要
 
 注意：Sokolov在Linux编写的代码，本仓库在Windows，Sokolov的源代码在这里<https://github.com/ssloy/tinyrenderer>
