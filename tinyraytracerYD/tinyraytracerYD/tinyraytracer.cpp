@@ -3,7 +3,8 @@
 // @description 主文件
 //
 // @version 1 20200519 绘制图像
-// @verisio 2 20200519 添加圆数据结构
+// @version 2 20200519 添加圆数据结构
+// @version 3 20200522 检测相交
 
 #define _USE_MATH_DEFINES
 
