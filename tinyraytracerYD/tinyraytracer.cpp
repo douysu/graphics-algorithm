@@ -10,6 +10,8 @@
 // @version 6 20200524 添加specular lighting
 // @version 7 20200524 添加反射reflect
 // @version 8 20200524 添加折射refract
+// @version 9 20200524 添加棋盘平面
+// @version 10 20200524 添加背景
 
 #include <limits>
 #include <cmath>
@@ -18,7 +20,15 @@
 #include <vector>
 #include "geometry.h"
 
+#define STB_IMAGE_WRITE_IMPLEMENTATION
+#include "stb_image_write.h"
+#define STB_IMAGE_IMPLEMENTATION
+#include "stb_image.h"
+
 using namespace std;
+
+int envmap_width, envmap_height;
+vector<Vec3f> envmap;
 
 struct Light
 {
@@ -110,7 +120,22 @@ bool scene_intersect(const Vec3f& orig, const Vec3f& dir, const vector<Sphere>& 
         }
     }
     
-    return spheres_dist < 1000;
+    float checkerboard_dist = std::numeric_limits<float>::max();
+    if (abs(dir.y) > 1e-3)
+    {
+        float d = -(orig.y + 4) / dir.y;
+        Vec3f pt = orig + dir * d;
+        if (d > 0 && abs(pt.x) < 10 && pt.z < -10 && pt.z > -30 && d < spheres_dist)
+        {
+            checkerboard_dist = d;
+            hit = pt;
+            N = Vec3f(0, 1, 0);
+            material.diffuse_color = (int(0.5 * hit.x + 1000) + int(.5 * hit.z)) & 1 ? Vec3f(1, 1, 1) : Vec3f(1, .7, .3);
+            material.diffuse_color = material.diffuse_color * .3;
+        }
+    }
+
+    return std::min(spheres_dist, checkerboard_dist) < 1000;
 }
 
 Vec3f cast_ray(const Vec3f &orig, const Vec3f &dir, const vector<Sphere>& spheres, const vector<Light>& lights, size_t depth = 0) {
@@ -159,43 +184,64 @@ void render(const vector<Sphere>& spheres, vector<Light>& lights) {
     #pragma omp parallel for
     for (size_t j = 0; j<height; j++) {
         for (size_t i = 0; i<width; i++) {
-            // 计算射线光反向方向
-            // *width/(float)height保持屏幕比
-            // tan(fov / 2) 表示一个像素所对应的世界单位
-            float x =  (2*(i + 0.5)/(float)width  - 1) * tan(fov/2.) * width / (float)height;
-            float y = -(2*(j + 0.5)/(float)height - 1) * tan(fov/2.);
-            Vec3f dir = Vec3f(x, y, -1).normalize();
+            // // 计算射线光反向方向
+            // // *width/(float)height保持屏幕比
+            // // tan(fov / 2) 表示一个像素所对应的世界单位
+            // float x =  (2*(i + 0.5)/(float)width  - 1) * tan(fov/2.) * width / (float)height;
+            // float y = -(2*(j + 0.5)/(float)height - 1) * tan(fov/2.);
+            // Vec3f dir = Vec3f(x, y, -1).normalize();
 
-            // 得到像素颜色
-            framebuffer[i+j*width] = cast_ray(Vec3f(0,0,0), dir, spheres, lights);
+            // // 得到像素颜色
+            // framebuffer[i+j*width] = cast_ray(Vec3f(0,0,0), dir, spheres, lights);
+
+            float dir_x =  (i + 0.5) -  width/2.;
+            float dir_y = -(j + 0.5) + height/2.;    // this flips the image at the same time
+            float dir_z = -height/(2.*tan(fov/2.));
+            framebuffer[i+j*width] = cast_ray(Vec3f(0,0,0), Vec3f(dir_x, dir_y, dir_z).normalize(), spheres, lights);
         }
     }
 
-    ofstream ofs; // save the framebuffer to file
-    ofs.open("./out.ppm");
-    ofs << "P6\n" << width << " " << height << "\n255\n";
-    for (size_t i = 0; i < height*width; ++i) {
-        for (size_t j = 0; j < 3; j++) {
-            // 保证计算出的值范围在0~1之间
-            Vec3f& c = framebuffer[i];
-            float max = std::max(c[0], std::max(c[1], c[2]));
-            if (max > 1) c = c * (1. / max);
-
-            // camera为(0, 0, 0)，方向向量标准化
-            ofs << (char)(255 * std::max(0.f, min(1.f, framebuffer[i][j])));
+    vector<unsigned char> pixmap(width * height *3);
+    for (size_t i = 0; i < width * height; i++)
+    {
+        Vec3f& c = framebuffer[i];
+        float max = std::max(c[0], std::max(c[1], c[2]));
+        if (max > 1) c = c * (1. / max);
+        for (size_t j = 0; j < 3; j++)
+        {
+            pixmap[i * 3 + j] = (unsigned char)(255 * std::max(0.f, std::min(1.f, framebuffer[i][j])));
         }
     }
-    ofs.close();
+
+    stbi_write_jpg("out.jpg", width, height, 3, pixmap.data(), 100);
 }
 
 int main(int argc, char** argv) {
+    int n = -1;
+    unsigned char* pixmap = stbi_load("./envmap.jpg", &envmap_width, &envmap_height, &n, 0);
+    if (!pixmap || n != 3)
+    {
+        cerr << "Error: can not load the environment map" << endl;
+        return -1;
+    }
+
+    envmap = vector<Vec3f>(envmap_width * envmap_height);
+    for (int j = envmap_height - 1; j >= 0; j--)
+    {
+        for (int i = 0; i < envmap_width; i++)
+        {
+            envmap[i + j * envmap_width] = Vec3f(pixmap[(i + j * envmap_width) * 3 + 0], pixmap[(i + j * envmap_width) * 3 + 1], pixmap[(i + j * envmap_width) * 3 + 2]) * (1 / 255.);
+        }
+    }
+    stbi_image_free(pixmap);
+
     Material      ivory(1.0, Vec4f(0.6,  0.3, 0.1, 0.0), Vec3f(0.4, 0.4, 0.3),   50.); // 象牙白
     Material      glass(1.5, Vec4f(0.0,  0.5, 0.1, 0.8), Vec3f(0.6, 0.7, 0.8),  125.); // 玻璃
     Material red_rubber(1.0, Vec4f(0.9,  0.1, 0.0, 0.0), Vec3f(0.3, 0.1, 0.1),   10.); // 红橡胶
     Material     mirror(1.0, Vec4f(0.0, 10.0, 0.8, 0.0), Vec3f(1.0, 1.0, 1.0), 1425.); // 镜子
     
     vector<Sphere> spheres;
-    spheres.push_back(Sphere(Vec3f(-3,    0,   -16), 2, ivory));
+    spheres.push_back(Sphere(Vec3f(0,    0,   -16), 2, ivory));
     spheres.push_back(Sphere(Vec3f(-1.0, -1.5, -12), 2, glass));
     spheres.push_back(Sphere(Vec3f( 1.5, -0.5, -18), 3, red_rubber));
     spheres.push_back(Sphere(Vec3f( 7,    5,   -18), 4, mirror));
