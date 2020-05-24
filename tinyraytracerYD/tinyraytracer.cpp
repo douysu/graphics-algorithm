@@ -6,6 +6,7 @@
 // @version 2 20200519 添加圆数据结构
 // @version 3 20200522 检测相交
 // @version 4 20200524 添加多个圆
+// @version 5 20200524 添加光照
 
 #include <limits>
 #include <cmath>
