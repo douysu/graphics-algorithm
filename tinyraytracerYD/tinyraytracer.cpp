@@ -89,7 +89,7 @@ Vec3f cast_ray(const Vec3f &orig, const Vec3f &dir, const vector<Sphere>& sphere
         return Vec3f(0.2, 0.7, 0.8); // 背景色
     }
 
-    // 计算环境光
+    // 计算diffuse
     float diffuse_light_intensity = 0;
     for (size_t i = 0; i < lights.size(); i++)
     {
