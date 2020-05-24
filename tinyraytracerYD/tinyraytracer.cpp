@@ -6,7 +6,8 @@
 // @version 2 20200519 添加圆数据结构
 // @version 3 20200522 检测相交
 // @version 4 20200524 添加多个圆
-// @version 5 20200524 添加光照
+// @version 5 20200524 添加diffuse lighting
+// @version 6 20200524 添加specular lighting
 
 #include <limits>
 #include <cmath>
@@ -28,10 +29,12 @@ struct Light
 
 struct Material
 {
-    Vec3f diffuse_color;
+    Vec2f albedo; // 反射率
+    Vec3f diffuse_color; // 漫反射颜色
+    float specular_exponent; // 反光度
 
-    Material(const Vec3f& color) : diffuse_color(color){}
-    Material() : diffuse_color(){}
+    Material(const Vec2f& a, const Vec3f& color, const float& spec) : albedo(a), diffuse_color(color), specular_exponent(spec){}
+    Material() : albedo(1, 0), diffuse_color(), specular_exponent(){}
 };
 
 
@@ -59,6 +62,11 @@ struct Sphere {
         return true;
     }
 };
+
+Vec3f reflect(const Vec3f& I, const Vec3f& N)
+{
+    return I - N * 2.f * (I * N);
+}
 
 bool scene_intersect(const Vec3f& orig, const Vec3f& dir, const vector<Sphere>& spheres, Vec3f& hit, Vec3f& N, Material& material)
 {
@@ -89,15 +97,21 @@ Vec3f cast_ray(const Vec3f &orig, const Vec3f &dir, const vector<Sphere>& sphere
         return Vec3f(0.2, 0.7, 0.8); // 背景色
     }
 
-    // 计算diffuse
+    // 计算diffuse和specular
     float diffuse_light_intensity = 0;
+    float specular_light_intensity = 0;
+
     for (size_t i = 0; i < lights.size(); i++)
     {
         Vec3f light_dir = (lights[i].position - point).normalize();
-        diffuse_light_intensity += lights[i].intensity * max (0.f, light_dir * N);
+
+        // 根据光照计算公式计算diffuse
+        diffuse_light_intensity += max (0.f, light_dir * N) * lights[i].intensity;
+        // 根据光照计算公式计算specular
+        specular_light_intensity += pow(max(0.f, reflect(light_dir, N) * dir), material.specular_exponent) * lights[i].intensity; 
     }
 
-    return material.diffuse_color * diffuse_light_intensity;
+    return material.diffuse_color * diffuse_light_intensity * material.albedo[0] + Vec3f(1.f, 1.f, 1.f) * specular_light_intensity * material.albedo[1];
 }
 
 void render(const vector<Sphere>& spheres, vector<Light>& lights) {
@@ -115,6 +129,8 @@ void render(const vector<Sphere>& spheres, vector<Light>& lights) {
             float x =  (2*(i + 0.5)/(float)width  - 1) * tan(fov/2.) * width / (float)height;
             float y = -(2*(j + 0.5)/(float)height - 1) * tan(fov/2.);
             Vec3f dir = Vec3f(x, y, -1).normalize();
+
+            // 得到像素颜色
             framebuffer[i+j*width] = cast_ray(Vec3f(0,0,0), dir, spheres, lights);
         }
     }
@@ -123,17 +139,22 @@ void render(const vector<Sphere>& spheres, vector<Light>& lights) {
     ofs.open("./out.ppm");
     ofs << "P6\n" << width << " " << height << "\n255\n";
     for (size_t i = 0; i < height*width; ++i) {
-        for (size_t j = 0; j<3; j++) {
-			// camera为(0, 0, 0)，方向向量标准化
-            ofs << (char)(255 * max(0.f, min(1.f, framebuffer[i][j])));
+        for (size_t j = 0; j < 3; j++) {
+            // 保证计算出的值范围在0~1之间
+            Vec3f& c = framebuffer[i];
+            float max = std::max(c[0], std::max(c[1], c[2]));
+            if (max > 1) c = c * (1. / max);
+
+            // camera为(0, 0, 0)，方向向量标准化
+            ofs << (char)(255 * std::max(0.f, min(1.f, framebuffer[i][j])));
         }
     }
     ofs.close();
 }
 
 int main(int argc, char** argv) {
-    Material ivory(Vec3f(0.4, 0.4, 0.3)); // 象牙白
-    Material red_rubber(Vec3f(0.3, 0.1, 0.1)); // 红橡胶
+    Material      ivory(Vec2f(0.6,  0.3), Vec3f(0.4, 0.4, 0.3), 50.); // 象牙白
+    Material red_rubber(Vec2f(0.9,  0.1), Vec3f(0.3, 0.1, 0.1), 10.); // 红橡胶
     
     vector<Sphere> spheres;
     spheres.push_back(Sphere(Vec3f(-3,    0,   -16), 2,      ivory));
@@ -143,6 +164,8 @@ int main(int argc, char** argv) {
     
     vector<Light> lights;
     lights.push_back(Light(Vec3f(-20, 20, 20), 1.5f));
+    lights.push_back(Light(Vec3f( 30, 50, -25), 1.8f));
+    lights.push_back(Light(Vec3f( 30, 20,  30), 1.7f));
 
     render(spheres, lights);
 
