@@ -123,8 +123,13 @@ bool scene_intersect(const Vec3f& orig, const Vec3f& dir, const vector<Sphere>& 
     float checkerboard_dist = std::numeric_limits<float>::max();
     if (abs(dir.y) > 1e-3)
     {
+        // 计算射线是否与平面相交
+        // 参考： https://zh.wikipedia.org/wiki/%E7%BA%BF%E9%9D%A2%E4%BA%A4%E7%82%B9
+        // 这里平面的任意一点为(0, 0, 0)
         float d = -(orig.y + 4) / dir.y;
         Vec3f pt = orig + dir * d;
+
+        // 限定平面y = -4 的大小长度和宽度
         if (d > 0 && abs(pt.x) < 10 && pt.z < -10 && pt.z > -30 && d < spheres_dist)
         {
             checkerboard_dist = d;
@@ -138,13 +143,14 @@ bool scene_intersect(const Vec3f& orig, const Vec3f& dir, const vector<Sphere>& 
     return std::min(spheres_dist, checkerboard_dist) < 1000;
 }
 
-Vec3f cast_ray(const Vec3f &orig, const Vec3f &dir, const vector<Sphere>& spheres, const vector<Light>& lights, size_t depth = 0) {
+Vec3f cast_ray(const Vec3f &orig, const Vec3f &dir, const vector<Sphere>& spheres, const vector<Light>& lights, size_t j, size_t i, size_t depth = 0) {
     Vec3f point, N;
     Material material;
 
     if (depth > 4 || !scene_intersect(orig, dir, spheres, point, N, material))
     {
-        return Vec3f(0.2, 0.7, 0.8); // 背景色
+        //return Vec3f(0.2, 0.7, 0.8); // 背景色
+        return envmap[i + j* 1024];
     }
 
     // 计算反射和折射方向
@@ -154,8 +160,8 @@ Vec3f cast_ray(const Vec3f &orig, const Vec3f &dir, const vector<Sphere>& sphere
     Vec3f reflect_orig = reflect_dir * N < 0 ? point - N * 1e-3 : point + N * 1e-3;
     Vec3f refract_orig = refract_dir * N < 0 ? point - N * 1e-3 : point + N * 1e-3;
     // 迭代进行光追
-    Vec3f reflect_color = cast_ray(reflect_orig, reflect_dir, spheres, lights, depth + 1);
-    Vec3f refract_color = cast_ray(refract_orig, refract_dir, spheres, lights, depth + 1);
+    Vec3f reflect_color = cast_ray(reflect_orig, reflect_dir, spheres, lights, j , i, depth + 1);
+    Vec3f refract_color = cast_ray(refract_orig, refract_dir, spheres, lights, j , i, depth + 1);
 
     // 计算diffuse和specular
     float diffuse_light_intensity = 0;
@@ -164,6 +170,14 @@ Vec3f cast_ray(const Vec3f &orig, const Vec3f &dir, const vector<Sphere>& sphere
     for (size_t i = 0; i < lights.size(); i++)
     {
         Vec3f light_dir = (lights[i].position - point).normalize();
+        float light_distance = (lights[i].position - point).norm();
+
+        Vec3f shadow_orig = light_dir * N < 0 ? point - N * 1e-3 : point + N * 1e-3;
+        Vec3f shadow_pt, shadow_N;
+        Material tmpmaterial;
+
+        if (scene_intersect(shadow_orig, light_dir, spheres, shadow_pt, shadow_N, tmpmaterial) && (shadow_pt-shadow_orig).norm() < light_distance)
+            continue;
 
         // 根据光照计算公式计算diffuse
         diffuse_light_intensity += max (0.f, light_dir * N) * lights[i].intensity;
@@ -184,20 +198,10 @@ void render(const vector<Sphere>& spheres, vector<Light>& lights) {
     #pragma omp parallel for
     for (size_t j = 0; j<height; j++) {
         for (size_t i = 0; i<width; i++) {
-            // // 计算射线光反向方向
-            // // *width/(float)height保持屏幕比
-            // // tan(fov / 2) 表示一个像素所对应的世界单位
-            // float x =  (2*(i + 0.5)/(float)width  - 1) * tan(fov/2.) * width / (float)height;
-            // float y = -(2*(j + 0.5)/(float)height - 1) * tan(fov/2.);
-            // Vec3f dir = Vec3f(x, y, -1).normalize();
-
-            // // 得到像素颜色
-            // framebuffer[i+j*width] = cast_ray(Vec3f(0,0,0), dir, spheres, lights);
-
             float dir_x =  (i + 0.5) -  width/2.;
             float dir_y = -(j + 0.5) + height/2.;    // this flips the image at the same time
             float dir_z = -height/(2.*tan(fov/2.));
-            framebuffer[i+j*width] = cast_ray(Vec3f(0,0,0), Vec3f(dir_x, dir_y, dir_z).normalize(), spheres, lights);
+            framebuffer[i+j*width] = cast_ray(Vec3f(0,0,0), Vec3f(dir_x, dir_y, dir_z).normalize(), spheres, lights, j, i);
         }
     }
 
