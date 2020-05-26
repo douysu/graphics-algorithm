@@ -47,7 +47,7 @@ struct Material
     float specular_exponent; // 反光度
 
     Material(const float& r, const Vec4f& a, const Vec3f& color, const float& spec) : refractive_index(r), albedo(a), diffuse_color(color), specular_exponent(spec){}
-    Material() : albedo(1, 0, 0, 0), diffuse_color(), specular_exponent(){}
+    Material() : refractive_index(1), albedo(1, 0, 0, 0), diffuse_color(), specular_exponent(){}
 };
 
 
@@ -143,14 +143,20 @@ bool scene_intersect(const Vec3f& orig, const Vec3f& dir, const vector<Sphere>& 
     return std::min(spheres_dist, checkerboard_dist) < 1000;
 }
 
-Vec3f cast_ray(const Vec3f &orig, const Vec3f &dir, const vector<Sphere>& spheres, const vector<Light>& lights, size_t j, size_t i, size_t depth = 0) {
+Vec3f cast_ray(const Vec3f &orig, const Vec3f &dir, const vector<Sphere>& spheres, const vector<Light>& lights, size_t depth = 0) {
     Vec3f point, N;
     Material material;
 
     if (depth > 4 || !scene_intersect(orig, dir, spheres, point, N, material))
     {
-        //return Vec3f(0.2, 0.7, 0.8); // 背景色
-        return envmap[i + j* 1024];
+        Vec3f p = dir;
+        float theta = acosf(p.y/p.norm());
+        float phi = atan2f(p.z,p.x) + M_PI;
+
+        int y = theta/(M_PI)*(envmap_height);
+        int x = phi/(2*M_PI)*(envmap_width);
+
+        return envmap[x + y * envmap_width];
     }
 
     // 计算反射和折射方向
@@ -160,8 +166,8 @@ Vec3f cast_ray(const Vec3f &orig, const Vec3f &dir, const vector<Sphere>& sphere
     Vec3f reflect_orig = reflect_dir * N < 0 ? point - N * 1e-3 : point + N * 1e-3;
     Vec3f refract_orig = refract_dir * N < 0 ? point - N * 1e-3 : point + N * 1e-3;
     // 迭代进行光追
-    Vec3f reflect_color = cast_ray(reflect_orig, reflect_dir, spheres, lights, j , i, depth + 1);
-    Vec3f refract_color = cast_ray(refract_orig, refract_dir, spheres, lights, j , i, depth + 1);
+    Vec3f reflect_color = cast_ray(reflect_orig, reflect_dir, spheres, lights, depth + 1);
+    Vec3f refract_color = cast_ray(refract_orig, refract_dir, spheres, lights, depth + 1);
 
     // 计算diffuse和specular
     float diffuse_light_intensity = 0;
@@ -192,7 +198,7 @@ Vec3f cast_ray(const Vec3f &orig, const Vec3f &dir, const vector<Sphere>& sphere
 void render(const vector<Sphere>& spheres, vector<Light>& lights) {
     const int width    = 1024;
     const int height   = 768;
-    const int fov      = M_PI/2.;
+    const int fov      = M_PI/3.;
     vector<Vec3f> framebuffer(width*height);
 
     #pragma omp parallel for
@@ -201,7 +207,7 @@ void render(const vector<Sphere>& spheres, vector<Light>& lights) {
             float dir_x =  (i + 0.5) -  width/2.;
             float dir_y = -(j + 0.5) + height/2.;    // this flips the image at the same time
             float dir_z = -height/(2.*tan(fov/2.));
-            framebuffer[i+j*width] = cast_ray(Vec3f(0,0,0), Vec3f(dir_x, dir_y, dir_z).normalize(), spheres, lights, j, i);
+            framebuffer[i+j*width] = cast_ray(Vec3f(0,0,0), Vec3f(dir_x, dir_y, dir_z).normalize(), spheres, lights);
         }
     }
 
@@ -230,13 +236,14 @@ int main(int argc, char** argv) {
     }
 
     envmap = vector<Vec3f>(envmap_width * envmap_height);
-    for (int j = envmap_height - 1; j >= 0; j--)
+    for (int j = envmap_height-1; j>=0 ; j--) 
     {
-        for (int i = 0; i < envmap_width; i++)
+        for (int i = 0; i<envmap_width; i++) 
         {
-            envmap[i + j * envmap_width] = Vec3f(pixmap[(i + j * envmap_width) * 3 + 0], pixmap[(i + j * envmap_width) * 3 + 1], pixmap[(i + j * envmap_width) * 3 + 2]) * (1 / 255.);
+            envmap[i+j*envmap_width] = Vec3f(pixmap[(i+j*envmap_width)*3+0], pixmap[(i+j*envmap_width)*3+1], pixmap[(i+j*envmap_width)*3+2])*(1/255.);
         }
     }
+
     stbi_image_free(pixmap);
 
     Material      ivory(1.0, Vec4f(0.6,  0.3, 0.1, 0.0), Vec3f(0.4, 0.4, 0.3),   50.); // 象牙白
@@ -248,7 +255,7 @@ int main(int argc, char** argv) {
     spheres.push_back(Sphere(Vec3f(0,    0,   -16), 2, ivory));
     spheres.push_back(Sphere(Vec3f(-1.0, -1.5, -12), 2, glass));
     spheres.push_back(Sphere(Vec3f( 1.5, -0.5, -18), 3, red_rubber));
-    spheres.push_back(Sphere(Vec3f( 7,    5,   -18), 4, mirror));
+    spheres.push_back(Sphere(Vec3f( 7,    5,   -18), 4, glass));
     
     vector<Light> lights;
     lights.push_back(Light(Vec3f(-20, 20, 20), 1.5f));
