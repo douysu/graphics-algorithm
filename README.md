@@ -11,6 +11,7 @@
 
 内容 | 源代码位置 | 效果 |
 -|-|-|
+光线追踪 | [源代码位置](./tinyraytracerYD) | <div align=center><img src="./result/tinyraytracer.jpg" width=200 ></div> |
 光栅渲染器 | [源代码位置](./tinyrendererYD) | <div align=center><img src="./result/africanhead.png" width=200 ></div> |
 OpenGL 拖尾、刀光、剑光、尾焰效果| [源代码位置](./streak) | <div align=center><img src="./result/streak.gif" width=150 ></div> |
 3D-PLY文件读取曲率计算| [源代码位置](./3D-PLY) | <img src="./result/curvature.png" width=300> |
