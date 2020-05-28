@@ -149,6 +149,7 @@ Vec3f cast_ray(const Vec3f &orig, const Vec3f &dir, const vector<Sphere>& sphere
 
     if (depth > 4 || !scene_intersect(orig, dir, spheres, point, N, material))
     {
+        // 球形贴图
         Vec3f p = dir;
         float theta = acosf(p.y/p.norm());
         float phi = atan2f(p.z,p.x) + M_PI;
@@ -182,6 +183,7 @@ Vec3f cast_ray(const Vec3f &orig, const Vec3f &dir, const vector<Sphere>& sphere
         Vec3f shadow_pt, shadow_N;
         Material tmpmaterial;
 
+        // 沿着灯方向走，看看有没有物体相交
         if (scene_intersect(shadow_orig, light_dir, spheres, shadow_pt, shadow_N, tmpmaterial) && (shadow_pt-shadow_orig).norm() < light_distance)
             continue;
 
@@ -252,10 +254,10 @@ int main(int argc, char** argv) {
     Material     mirror(1.0, Vec4f(0.0, 10.0, 0.8, 0.0), Vec3f(1.0, 1.0, 1.0), 1425.); // 镜子
     
     vector<Sphere> spheres;
-    spheres.push_back(Sphere(Vec3f(0,    0,   -16), 2, ivory));
-    spheres.push_back(Sphere(Vec3f(-1.0, -1.5, -12), 2, glass));
+    spheres.push_back(Sphere(Vec3f(-3,    0,   -16), 2,      ivory));
+    spheres.push_back(Sphere(Vec3f(-1.0, -1.5, -12), 2,      glass));
     spheres.push_back(Sphere(Vec3f( 1.5, -0.5, -18), 3, red_rubber));
-    spheres.push_back(Sphere(Vec3f( 7,    5,   -18), 4, glass));
+    spheres.push_back(Sphere(Vec3f( 7,    5,   -18), 4,     mirror));
     
     vector<Light> lights;
     lights.push_back(Light(Vec3f(-20, 20, 20), 1.5f));
