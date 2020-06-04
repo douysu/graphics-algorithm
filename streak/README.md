@@ -9,7 +9,9 @@
 # 介绍
 
 模块运行平台为Android，其是使用OpenGL ES开发的切水果的刀光效果，模块可应用于割绳子游戏、飞机尾焰、武器挥舞特效等。
-![这里写图片描述](./result/result.gif)
+
+<img src = "./result/result.gif" width = 200>
+<img src = "./result/streak2.png" width = 200>
 
 # 实现算法
 

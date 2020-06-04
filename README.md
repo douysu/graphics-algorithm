@@ -11,10 +11,10 @@
 
 内容 | 源代码位置 | 效果 |
 -|-|-|
-光线追踪 | [源代码位置](./tinyraytracerYD) | <div align=center><img src="./result/tinyraytracer.jpg" width=200 ></div> |
-光栅渲染器 | [源代码位置](./tinyrendererYD) | <div align=center><img src="./result/africanhead.png" width=200 ></div> |
-医疗人体3D展示系统 | [源代码位置](./moving-light-strip) | <div align=center><img src="./result/moving-light-strip.gif" width=150 ></div> |
-3D海洋馆（带鱼群骨骼动画）| [源代码位置](./streak) | <div align=center><img src="./result/wallpaper.gif" width=150 ></div> |
+C++实现光线追踪算法 | [源代码位置](./tinyraytracerYD) | <div align=center><img src="./result/tinyraytracer.jpg" width=200 ></div> |
+C++实现光栅渲染器 | [源代码位置](./tinyrendererYD) | <div align=center><img src="./result/africanhead.png" width=200 ></div> |
+基于物理粒子系统的鱼群水族馆 | [源代码位置](./streak) | <div align=center><img src="./result/wallpaper.gif" width=150 ></div> |
+医疗项目3D人体展示系统 | [源代码位置](./moving-light-strip) | <div align=center><img src="./result/moving-light-strip.gif" width=150 ></div> |
 OpenGL 拖尾、刀光、剑光、尾焰效果| [源代码位置](./wallpaper) | <div align=center><img src="./result/streak.gif" width=150 ></div> |
 3D-PLY文件读取曲率计算| [源代码位置](./3D-PLY) | <img src="./result/curvature.png" width=300> |
 3D-骨架提取| [源代码位置](./3D-skeleton) | <div align=center><img src="./result/skeleton.png" width=200></div> |
