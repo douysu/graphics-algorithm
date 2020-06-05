@@ -12,8 +12,7 @@
 
 
 <img src = "../result/moving-light-strip.gif" width = 250>
-
-<img src = "./result/app.png" width = 300>
+<img src = "./result/app.png" width = 450>
 
 # 开发
 
