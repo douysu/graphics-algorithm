@@ -10,7 +10,8 @@
 
 运行效果：
 
-![](./result/result.gif)
+<img src = "./result/result.gif" width = 250>
+<img src = "./result/result2.png" width = 250>
 
 主要有以下内容：
 
