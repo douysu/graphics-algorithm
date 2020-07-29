@@ -6,6 +6,10 @@
 - [我的Github](https://github.com/douysu)
 - [我的博客](https://blog.csdn.net/ModestBean)
 
+# 下载单一项目代码
+
+Chrome安装 ``GitZip for github``
+
 # 目录
 
 内容 | 源代码位置 | 效果 |
@@ -13,7 +17,7 @@
 Ray Tracing（光线追踪） | [源代码位置](./tinyraytracerYD) | <div align=center><img src="./result/tinyraytracer.jpg" width=200 ></div> |
 Software Rendering（软渲染） | [源代码位置](./tinyrendererYD) | <div align=center><img src="./result/africanhead.png" width=200 ></div> |
 Fluid Simulation(物理动画流体模拟) | [源代码位置](./melt-animation) | <div align=center><img src="./result/IISPH.gif" width=200 ></div> |
-3D Curvature（3D曲率原理及计算）| [源代码位置](./3D-PLY) | <img src="./result/curvature.png" width=300> |
+3D Curvature（3D曲率原理及计算）| [源代码位置](./3D-PLY) | <img src="./result/curvature.png" width=200> |
 3D Skeleton Analysis（3D模型骨架提取及分析）| [源代码位置](./3D-skeleton) | <div align=center><img src="./result/skeleton.png" width=200></div> |
 3D Medical Body（医疗项目3D人体展示系统） | [源代码位置](./moving-light-strip) | <div align=center><img src="./result/moving-light-strip.gif" width=150 ></div> |
 OpenGL MotionStreak（OpenGL拖尾、刀光、剑光、尾焰效果）| [源代码位置](./streak) | <div align=center><img src="./result/streak.gif" width=150 ></div> |
