@@ -64,7 +64,7 @@ Blender渲染器或者Mitsuba renderer渲染器，或者其他您熟练的渲染
 
 * Google：[https://drive.google.com/file/d/1M511EWM5tiRGgowY9sVHgRbZGaweie1C/view?usp=sharing](https://drive.google.com/file/d/1M511EWM5tiRGgowY9sVHgRbZGaweie1C/view?usp=sharing)
 
-Baidu：链接：[https://pan.baidu.com/s/1dgVHBwL607WLEwVw8vButQ](https://pan.baidu.com/s/1dgVHBwL607WLEwVw8vButQ)  提取码：o4li
+* Baidu：链接：[https://pan.baidu.com/s/1dgVHBwL607WLEwVw8vButQ](https://pan.baidu.com/s/1dgVHBwL607WLEwVw8vButQ)  提取码：o4li
 
 ![图片](https://uploader.shimo.im/f/xw5L5H7zmEkIcgJx.png!thumbnail)
 
