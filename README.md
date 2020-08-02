@@ -8,12 +8,13 @@
 
 # 下载单一项目代码
 
-Chrome安装 ``GitZip for github``
+Chrome安装 ``GitZip for github``插件
 
 # 目录
 
 内容 | 源代码位置 | 效果 |
--|-|-|
+:-:|:-:|:-:|
+Physically Based Rendering（PBR基于物理渲染） | [源代码位置](./physically-rendering) | <img src="./result/PBR-OpenGL.png" width=200 >[[演示视频]](https://www.bilibili.com/video/BV1TV411z7qe) |
 Ray Tracing（光线追踪） | [源代码位置](./tinyraytracerYD) | <div align=center><img src="./result/tinyraytracer.jpg" width=200 ></div> |
 Software Rendering（软渲染） | [源代码位置](./tinyrendererYD) | <div align=center><img src="./result/africanhead.png" width=200 ></div> |
 Fluid Simulation(物理动画流体模拟) | [源代码位置](./melt-animation) | <div align=center><img src="./result/IISPH.gif" width=200 ></div> |
