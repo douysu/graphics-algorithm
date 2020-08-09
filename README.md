@@ -8,7 +8,7 @@
 
 # 下载单一项目代码
 
-Chrome安装 ``GitZip for github``插件
+Chrome安装 ``GitZip for github``插件，双击单一目录即下载。
 
 # 目录
 
