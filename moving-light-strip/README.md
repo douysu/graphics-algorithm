@@ -5,7 +5,7 @@
 为医疗项目APP接入3D人体展示模块，带移动光带效果
 
 
-<img src = "../result/moving-light-strip.gif" width = 250><img src = "./result/moving-light-strip2.png" width = 250>
+<img src = "../result/moving-light-strip.gif" width = 250>    <img src = "./result/moving-light-strip2.png" width = 250>
 
 <img src = "./result/app.png" width = 450>
 

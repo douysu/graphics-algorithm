@@ -3,7 +3,7 @@
 图形学项目案例实现总结（包括渲染、光照、点云等）。我的联系方式是yindou97@163.com，如果对您有帮助还请帮忙点一个star。记录图形学开发内容，学习过程中的总结仓库：<https://github.com/douysu/computer-graphics-notes>
 
 - [知乎专栏](https://zhuanlan.zhihu.com/graphics-douysu)
-- [早期博客](https://blog.csdn.net/ModestBean)
+- [博客地址](https://blog.csdn.net/ModestBean)
 
 # 下载单一项目代码
 
