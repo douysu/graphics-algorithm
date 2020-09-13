@@ -1,8 +1,9 @@
 # 3D代码实现仓库
 
-图形学项目案例实现总结（包括渲染、光照、点云等）。我的联系方式是yindou97@163.com，如果对您有帮助还请帮忙点一个star。我的个人总结仓库：<https://github.com/douysu/person-summary>
+图形学项目案例实现总结（包括渲染、光照、点云等）。我的联系方式是yindou97@163.com，如果对您有帮助还请帮忙点一个star。记录图形学开发内容，学习过程中的总结仓库：<https://github.com/douysu/computer-graphics-notes>
 
 - [知乎专栏](https://zhuanlan.zhihu.com/graphics-douysu)
+- [早期博客](https://blog.csdn.net/ModestBean)
 
 # 下载单一项目代码
 
@@ -23,7 +24,8 @@ Chrome安装 ``GitZip for github``插件，双击单一目录即下载。(每个
 <img src="./result/wallpaper.gif" width=150> | 3D Aquarium（基于物理粒子系统的鱼群水族馆） <br>  [[Code](https://github.com/douysu/graphics-algorithm/tree/master/wallpaper)]
 <img src="./result/blur-scene-gaussian--3d.jpg" width=200> | 3D Scene Blur（OpenGL场景Blur虚化景深效果） <br> [[WebPage](https://blog.csdn.net/ModestBean/article/details/79512208)]  [[Code](https://github.com/douysu/graphics-algorithm/tree/master/blur-scene-gaussian--3d)]
 <img src="./result/x-ray-scene_3d.png" width=200> | Multi-buffer X-Ray（多缓冲X-Ray人物透视效果） <br> [[Code](https://github.com/douysu/graphics-algorithm/tree/master/x-ray-scene_3d)]
-<img src="./result/CameraRoam.jfif" width=200> | OpenGL Uniform Buffer Object（Uniform缓冲对象） <br> [[WebPage](https://blog.csdn.net/ModestBean/article/details/79130517)]  [[Code](https://github.com/douysu/graphics-algorithm/tree/master/opengles-uniform-buffer)]
-<img src="./result/opengles-uniform-buffer.jfif" width=150> | OpenGL Camera（OpenGL 摄像机漫游） <br> [[WebPage](https://blog.csdn.net/ModestBean/article/details/79130876)]  [[Code](https://github.com/douysu/graphics-algorithm/tree/master/CameraRoam)]
+<img src="./result/CameraRoam.jfif" width=200> | OpenGL Camera（OpenGL 摄像机漫游） <br> [[WebPage](https://blog.csdn.net/ModestBean/article/details/79130876)]  [[Code](https://github.com/douysu/graphics-algorithm/tree/master/CameraRoam)]
+<img src="./result/opengles-uniform-buffer.jfif" width=150> | OpenGL Uniform Buffer Object（Uniform缓冲对象） <br> [[WebPage](https://blog.csdn.net/ModestBean/article/details/79130517)]  [[Code](https://github.com/douysu/graphics-algorithm/tree/master/opengles-uniform-buffer)]
+
 
 

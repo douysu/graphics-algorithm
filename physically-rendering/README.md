@@ -8,7 +8,7 @@
 
 [[演示视频链接]](https://www.bilibili.com/video/BV1TV411z7qe)
 
-<img src="../result/PBR-OpenGL.png" width=800 >
+<img src="../result/PBR-OpenGL.jpg" width=800 >
 
 # 3.实现过程
 

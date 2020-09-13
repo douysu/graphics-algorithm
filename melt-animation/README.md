@@ -1,13 +1,5 @@
 # 物理动画流体模拟Fluid Simulation
 
-作者：憨豆酒（YinDou），yindou97@163.com，熟悉图形学，图像处理领域，经常更新的学习总结仓库：[https://github.com/douysu/person-summary](https://github.com/douysu/person-summary) 如果对您有帮助还请帮忙点一个star，如果大家发现错误以及不合理之处，还希望多多指出。
-
-[我的知乎](https://zhuanlan.zhihu.com/graphics-douysu)
-
-[我的Github](https://github.com/douysu)
-
-[我的博客](https://blog.csdn.net/ModestBean)
-
 # 0 介绍
 
 以下为在实验室完成的效果，特殊原因，实验室代码不方便开源，找到了其他开源代码，实现过程如下。
