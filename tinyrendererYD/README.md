@@ -6,7 +6,12 @@
 
 教程最终实现的渲染效果如下图所示：
 
-<img src="./translate/chapter0/africanhead.png" width=400>
+<img src="./result/render3.jpg" width=400>
+
+<img src="./result/render2.jpg" width=400>
+
+<img src="./result/render1.jpg" width=400>
+
 
 # 相应文章目录：
 
