@@ -162,7 +162,7 @@ int main(int argc, char** argv)
 	if (argc == 2)
 		model = new Model(argv[1]);
 	else
-		model = new Model("../obj/african_head.obj");
+		model = new Model("../obj/DamagedHelmet.obj");
 
 	// »æÖÆÄ£ÐÍ
 	TGAImage image(width, height, TGAImage::RGB);

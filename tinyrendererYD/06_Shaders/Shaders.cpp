@@ -125,7 +125,7 @@ int main(int argc, char** argv)
 	if (argc == 2)
 		model = new Model(argv[1]);
 	else
-		model = new Model("../obj/african_head.obj");
+		model = new Model("../obj/oldman.obj");
 
 	lookat(eye, center, up);
 	viewport(width / 8, height / 8, width * 3 / 4, height * 3 / 4);

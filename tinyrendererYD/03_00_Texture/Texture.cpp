@@ -133,7 +133,7 @@ int main(int argc, char** argv)
 	if (argc == 2)
 		model = new Model(argv[1]);
 	else
-		model = new Model("../obj/african_head.obj");
+		model = new Model("../obj/DamagedHelmet.obj");
 
 	float* zbuffer = new float[width * height];
 	for (int i = width * height; i--; zbuffer[i] = -numeric_limits<float>::max());
