@@ -19,13 +19,14 @@ Chrome安装 ``GitZip for github``插件，双击单一目录即下载。(每个
 <img src="./result/render3.jpg" width=200> | Software Rendering（软渲染） <br> [[WebPage](https://zhuanlan.zhihu.com/p/141210744)]  [[Code](https://github.com/douysu/graphics-algorithm/tree/master/tinyrendererYD)]
 <img src="./result/curvature.png" width=200> | 3D Curvature（3D曲率原理及计算） <br> [[WebPage](https://zhuanlan.zhihu.com/p/112294045)]  [[Code](https://github.com/douysu/graphics-algorithm/tree/master/3D-PLY)]
 <img src="./result/skeleton.jpg" width=200> | 3D Skeleton Analysis（3D模型骨架提取及分析） <br> [[WebPage](https://zhuanlan.zhihu.com/p/112299945)]  [[Code](https://github.com/douysu/graphics-algorithm/tree/master/3D-skeleton)]
+<img src="./result/blur-scene-gaussian--3d.jpg" width=200> | 3D Scene Blur（屏幕后处理-景深模糊） <br> [[WebPage](https://blog.csdn.net/ModestBean/article/details/79512208)]  [[Code](https://github.com/douysu/graphics-algorithm/tree/master/blur-scene-gaussian--3d)]
+<img src="./result/x-ray-scene_3d.png" width=200> | Multi-buffer X-Ray（离屏渲染FBO-人物透墙） <br> [[Code](https://github.com/douysu/graphics-algorithm/tree/master/x-ray-scene_3d)]
 <img src="./result/r9.gif" width=150> | 3D Medical Body（医疗项目3D人体展示系统） <br> [[WebPage](https://blog.csdn.net/ModestBean/article/details/79241519)]  [[Code](https://github.com/douysu/graphics-algorithm/tree/master/moving-light-strip)]
 <img src="./result/streak.gif" width=150> | OpenGL MotionStreak（OpenGL拖尾、刀光、剑光、尾焰效果） <br> [[WebPage](https://zhuanlan.zhihu.com/p/112252151)]  [[Code](https://github.com/douysu/graphics-algorithm/tree/master/streak)]
 <img src="./result/wallpaper.gif" width=150> | 3D Aquarium（基于物理粒子系统的鱼群水族馆） <br>  [[Code](https://github.com/douysu/graphics-algorithm/tree/master/wallpaper)]
-<img src="./result/blur-scene-gaussian--3d.jpg" width=200> | 3D Scene Blur（OpenGL场景Blur虚化景深效果） <br> [[WebPage](https://blog.csdn.net/ModestBean/article/details/79512208)]  [[Code](https://github.com/douysu/graphics-algorithm/tree/master/blur-scene-gaussian--3d)]
-<img src="./result/x-ray-scene_3d.png" width=200> | Multi-buffer X-Ray（多缓冲X-Ray人物透视效果） <br> [[Code](https://github.com/douysu/graphics-algorithm/tree/master/x-ray-scene_3d)]
-<img src="./result/CameraRoam.jfif" width=200> | OpenGL Camera（OpenGL 摄像机漫游） <br> [[WebPage](https://blog.csdn.net/ModestBean/article/details/79130876)]  [[Code](https://github.com/douysu/graphics-algorithm/tree/master/CameraRoam)]
 <img src="./result/opengles-uniform-buffer.jfif" width=150> | OpenGL Uniform Buffer Object（Uniform缓冲对象） <br> [[WebPage](https://blog.csdn.net/ModestBean/article/details/79130517)]  [[Code](https://github.com/douysu/graphics-algorithm/tree/master/opengles-uniform-buffer)]
+<img src="./result/CameraRoam.jfif" width=200> | OpenGL Camera（OpenGL 摄像机漫游） <br> [[WebPage](https://blog.csdn.net/ModestBean/article/details/79130876)]  [[Code](https://github.com/douysu/graphics-algorithm/tree/master/CameraRoam)]
+
 
 
 
